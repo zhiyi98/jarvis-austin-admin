@@ -1,0 +1,916 @@
+{
+  "type": "page",
+  "title": "新建消息模板配置",
+  "body": [
+    {
+      "title": "",
+      "actions": [
+        {
+          "label": "保存",
+          "type": "submit",
+          "level": "success"
+        }
+      ],
+      "body": [
+        {
+          "type": "fieldSet",
+          "title": "基本配置",
+          "body": [
+            {
+              "type": "input-text",
+              "label": "模板名称",
+              "name": "name",
+              "size": "md",
+              "required": true
+            },
+            {
+              "type": "input-text",
+              "label": "模板业务方",
+              "name": "proposer",
+              "size": "md",
+              "mode": "",
+              "description": ""
+            },
+            {
+              "type": "radios",
+              "label": "接收者Id类型",
+              "name": "idType",
+              "options": [
+                {
+                  "label": "用户ID",
+                  "value": "10"
+                },
+                {
+                  "label": "设备号",
+                  "value": "20"
+                },
+                {
+                  "label": "手机号",
+                  "value": "30"
+                },
+                {
+                  "label": "openID",
+                  "value": "40"
+                },
+                {
+                  "label": "邮箱地址",
+                  "value": "50"
+                },
+                {
+                  "label": "企业微信userId",
+                  "value": "60"
+                },
+                {
+                  "label": "钉钉userId",
+                  "value": "70"
+                },
+                {
+                  "label": "推送通知栏cid",
+                  "value": "80"
+                },
+                {
+                  "label": "飞书userId",
+                  "value": "90"
+                }
+              ],
+              "required": true
+            },
+            {
+              "type": "radios",
+              "label": "消息类型",
+              "name": "msgType",
+              "options": [
+                {
+                  "label": "通知类",
+                  "value": "10"
+                },
+                {
+                  "label": "营销类",
+                  "value": "20"
+                },
+                {
+                  "label": "验证码",
+                  "value": "30"
+                }
+              ],
+              "required": true
+            },
+            {
+              "type": "radios",
+              "label": "屏蔽类型",
+              "name": "shieldType",
+              "options": [
+                {
+                  "label": "夜间不屏蔽",
+                  "value": "10"
+                },
+                {
+                  "label": "夜间屏蔽",
+                  "value": "20"
+                },
+                {
+                  "label": "夜间屏蔽(次日早上9点发送)",
+                  "value": "30"
+                }
+              ],
+              "required": true
+            },
+            {
+              "type": "radios",
+              "label": "消息模板类型",
+              "name": "templateType",
+              "options": [
+                {
+                  "label": "定时",
+                  "value": "10"
+                },
+                {
+                  "label": "实时",
+                  "value": "20"
+                }
+              ],
+              "required": true
+            },
+            {
+              "type": "input-text",
+              "label": "cron表达式",
+              "name": "expectPushTime",
+              "size": "md",
+              "visibleOn": "this.templateType == 10",
+              "clearValueOnHidden": false,
+              "visible": "",
+              "required": true,
+              "description": "1、<font color=\"#008252\">生成cron表达式页面：<a href=\"https://www.matools.com/cron\" target=\"_blank\">https://www.matools.com/cron</a></font>    2、<font color=\"#008252\">需要【立即发送】时填0</font>",
+              "placeholder": "需要【立即发送】时填0"
+            },
+            {
+              "type": "input-file",
+              "name": "file",
+              "visibleOn": "this.templateType == 10",
+              "required": true,
+              "label": "人群文件上传",
+              "accept": ".csv",
+              "receiver": "http://localhost:8080/messageTemplate/upload",
+              "remark": null,
+              "labelRemark": null,
+              "mode": "",
+              "description": "1、<font color=\"#008252\">文件格式：csv文件</font> 2、<font color=\"#008252\">内容格式：列名userId,占位符变量1,占位符变量2</font>",
+              "autoFill": {
+                "cronCrowdPath": "${value}"
+              }
+            },
+            {
+              "type": "input-text",
+              "name": "cronCrowdPath",
+              "size": "md",
+              "visibleOn": "this.templateType == 10",
+              "clearValueOnHidden": false,
+              "visible": "",
+              "required": true,
+              "readOnly": true,
+              "label": "人群文件路径",
+              "placeholder": "上传成功后自动填写(无须编辑)"
+            }
+          ],
+          "bodyClassName": "r-3x w-full text-lg r font-bold",
+          "className": ""
+        },
+        {
+          "type": "fieldSet",
+          "title": "渠道信息",
+          "body": [
+            {
+              "name": "sendChannel",
+              "label": "发送渠道",
+              "type": "radios",
+              "options": [
+                {
+                  "label": "IM站内信",
+                  "value": "10"
+                },
+                {
+                  "label": "PUSH通知栏",
+                  "value": "20"
+                },
+                {
+                  "label": "短信",
+                  "value": "30"
+                },
+                {
+                  "label": "邮箱",
+                  "value": "40"
+                },
+                {
+                  "label": "服务号",
+                  "value": "50"
+                },
+                {
+                  "label": "小程序",
+                  "value": "60"
+                },
+                {
+                  "label": "企业微信",
+                  "value": "70"
+                },
+                {
+                  "label": "钉钉群机器人",
+                  "value": "80"
+                },
+                {
+                  "label": "钉钉工作消息",
+                  "value": "90"
+                },
+                {
+                  "label": "企业微信机器人",
+                  "value": "100"
+                },
+                {
+                  "label": "飞书机器人",
+                  "value": "110"
+                }
+              ],
+              "required": true
+            },
+            {
+              "type": "input-text",
+              "label": "短信账号",
+              "name": "sendAccount",
+              "disabled": true,
+              "value": "0",
+              "placeholder": "自动会根据消息类型选择发送账号",
+              "description": "自动会根据消息类型选择发送账号",
+              "visibleOn": "this.sendChannel == 30",
+              "clearValueOnHidden": false,
+              "required": true,
+              "size": "lg"
+            },
+            {
+              "name": "content",
+              "type": "input-text",
+              "label": "短信内容",
+              "required": true,
+              "visibleOn": "this.sendChannel == 30",
+              "mode": "",
+              "size": "lg",
+              "clearValueOnHidden": false,
+              "placeholder": "可用占位符{$content}"
+            },
+            {
+              "type": "input-text",
+              "label": "短信链接",
+              "name": "url",
+              "visibleOn": "this.sendChannel == 30",
+              "size": "lg",
+              "clearValueOnHidden": false,
+              "placeholder": "可用占位符{$url}，最好输入短链接"
+            },
+            {
+              "type": "select",
+              "label": "发送账号",
+              "name": "sendAccount",
+              "options": [
+                {
+                  "label": "个推",
+                  "value": "10"
+                }
+              ],
+              "visibleOn": "this.sendChannel == 20",
+              "clearValueOnHidden": false,
+              "required": true,
+              "size": "lg"
+            },
+            {
+              "name": "title",
+              "type": "input-text",
+              "label": "发送标题",
+              "required": true,
+              "visibleOn": "this.sendChannel == 20",
+              "mode": "",
+              "size": "lg",
+              "clearValueOnHidden": false,
+              "placeholder": "可用占位符{$title}"
+            },
+            {
+              "name": "content",
+              "type": "input-text",
+              "label": "发送内容",
+              "required": true,
+              "visibleOn": "this.sendChannel == 20",
+              "mode": "",
+              "size": "lg",
+              "clearValueOnHidden": false,
+              "placeholder": "可用占位符{$content}"
+            },
+            {
+              "type": "input-text",
+              "label": "发送链接",
+              "name": "url",
+              "required": true,
+              "visibleOn": "this.sendChannel == 20",
+              "size": "lg",
+              "clearValueOnHidden": false,
+              "placeholder": "可用占位符{$url}"
+            },
+            {
+              "type": "select",
+              "label": "邮件账号",
+              "name": "sendAccount",
+              "options": [
+                {
+                  "label": "QQ邮箱",
+                  "value": "10"
+                },
+                {
+                  "label": "163邮箱",
+                  "value": "20"
+                }
+              ],
+              "visibleOn": "this.sendChannel == 40",
+              "clearValueOnHidden": false,
+              "required": true,
+              "size": "lg"
+            },
+            {
+              "type": "input-text",
+              "label": "邮件标题",
+              "name": "title",
+              "required": true,
+              "visibleOn": "this.sendChannel == 40",
+              "size": "lg",
+              "clearValueOnHidden": false,
+              "placeholder": "可用占位符{$title}"
+            },
+            {
+              "type": "input-text",
+              "label": "邮件内容",
+              "name": "content",
+              "required": true,
+              "visibleOn": "this.sendChannel == 40",
+              "size": "lg",
+              "clearValueOnHidden": false,
+              "placeholder": "可用占位符{$content}，可输入HTML"
+            },
+            {
+              "type": "select",
+              "label": "飞书机器人",
+              "name": "sendAccount",
+              "options": [
+                {
+                  "label": "austin",
+                  "value": "10"
+                },
+                {
+                  "label": "athena",
+                  "value": "20"
+                }
+              ],
+              "visibleOn": "this.sendChannel == 110",
+              "clearValueOnHidden": false,
+              "required": true,
+              "size": "lg"
+            },
+            {
+              "name": "sendType",
+              "label": "发送类型",
+              "type": "radios",
+              "options": [
+                {
+                  "label": "文本",
+                  "value": "10"
+                },
+
+                {
+                  "label": "图片",
+                  "value": "100"
+                },
+                {
+                  "label": "跳转卡片",
+                  "value": "120"
+                },
+                {
+                  "label": "富文本",
+                  "value": "150"
+                },
+                {
+                  "label": "群卡片",
+                  "value": "160"
+                }
+              ],
+              "visibleOn": "this.sendChannel == 110",
+              "clearValueOnHidden": false,
+              "required": true,
+              "size": "lg"
+            },
+            {
+              "type": "input-text",
+              "label": "飞书内容",
+              "name": "content",
+              "required": true,
+              "visibleOn": "this.sendChannel == 110 && this.sendType ==10 ",
+              "size": "lg",
+              "clearValueOnHidden": false,
+              "placeholder": "可用占位符{$content}"
+            },
+            {
+              "type": "input-text",
+              "label": "图片标识",
+              "name": "mediaId",
+              "required": true,
+              "visibleOn": "this.sendChannel == 110 && this.sendType ==100 ",
+              "size": "lg",
+              "clearValueOnHidden": false,
+              "placeholder": "可用占位符{$mediaId}"
+            },
+            {
+              "type": "select",
+              "label": "企业微信应用",
+              "name": "sendAccount",
+              "options": [
+                {
+                  "label": "austin",
+                  "value": "10"
+                },
+                {
+                  "label": "athena",
+                  "value": "20"
+                }
+              ],
+              "visibleOn": "this.sendChannel == 70",
+              "clearValueOnHidden": false,
+              "required": true,
+              "size": "lg"
+            },
+            {
+              "type": "select",
+              "label": "钉钉群机器人",
+              "name": "sendAccount",
+              "options": [
+                {
+                  "label": "austin",
+                  "value": "10"
+                },
+                {
+                  "label": "athena",
+                  "value": "20"
+                }
+              ],
+              "visibleOn": "this.sendChannel == 80",
+              "clearValueOnHidden": false,
+              "required": true,
+              "size": "lg"
+            },
+            {
+              "type": "select",
+              "label": "钉钉应用",
+              "name": "sendAccount",
+              "options": [
+                {
+                  "label": "austin",
+                  "value": "10"
+                },
+                {
+                  "label": "athena",
+                  "value": "20"
+                }
+              ],
+              "visibleOn": "this.sendChannel == 90",
+              "clearValueOnHidden": false,
+              "required": true,
+              "size": "lg"
+            },
+            {
+              "name": "sendType",
+              "label": "发送类型",
+              "type": "radios",
+              "options": [
+                {
+                  "label": "文本",
+                  "value": "10"
+                },
+                {
+                  "label": "语音",
+                  "value": "20"
+                },
+                {
+                  "label": "视频",
+                  "value": "30"
+                },
+                {
+                  "label": "图文",
+                  "value": "40"
+                },
+                {
+                  "label": "文本卡片",
+                  "value": "50"
+                },
+                {
+                  "label": "文件",
+                  "value": "60"
+                },
+                {
+                  "label": "小程序通知",
+                  "value": "70"
+                },
+                {
+                  "label": "markdown类型",
+                  "value": "80"
+                },
+                {
+                  "label": "模板卡片",
+                  "value": "90"
+                },
+                {
+                  "label": "图片",
+                  "value": "100"
+                },
+                {
+                  "label": "链接消息",
+                  "value": "110"
+                }
+              ],
+              "visibleOn": "this.sendChannel == 70  ",
+              "clearValueOnHidden": false,
+              "required": true,
+              "size": "lg"
+            },
+            {
+              "name": "sendType",
+              "label": "发送类型",
+              "type": "radios",
+              "options": [
+                {
+                  "label": "文本(text)",
+                  "value": "10"
+                },
+                {
+                  "label": "语音(voice)",
+                  "value": "20"
+                },
+                {
+                  "label": "文件(file)",
+                  "value": "60"
+                },
+                {
+                  "label": "markdown类型(markdown)",
+                  "value": "80"
+                },
+                {
+                  "label": "图片(image)",
+                  "value": "100"
+                },
+                {
+                  "label": "链接消息(link)",
+                  "value": "110"
+                },
+                {
+                  "label": "卡片消息(action_card)",
+                  "value": "120"
+                },
+                {
+                  "label": "OA消息(oa)",
+                  "value": "130"
+                }
+              ],
+              "visibleOn": "this.sendChannel==90 ",
+              "clearValueOnHidden": false,
+              "required": true,
+              "size": "lg"
+            },
+            {
+              "name": "sendType",
+              "label": "发送类型",
+              "type": "radios",
+              "options": [
+                {
+                  "label": "文本(text)",
+                  "value": "10"
+                },
+                {
+                  "label": "图文(FeedCard)",
+                  "value": "40"
+                },
+                {
+                  "label": "markdown类型(markdown)",
+                  "value": "80"
+                },
+                {
+                  "label": "链接消息(links)",
+                  "value": "110"
+                },
+                {
+                  "label": "卡片消息(actionCard)",
+                  "value": "120"
+                }
+              ],
+              "visibleOn": "this.sendChannel == 80",
+              "clearValueOnHidden": false,
+              "required": true,
+              "size": "lg"
+            },
+            {
+              "type": "input-text",
+              "label": "企业微信内容",
+              "name": "content",
+              "required": true,
+              "visibleOn": "this.sendChannel == 70 && this.sendType == 10",
+              "size": "lg",
+              "clearValueOnHidden": false,
+              "placeholder": "可用占位符{$content}"
+            },
+            {
+              "type": "input-text",
+              "label": "钉钉标题",
+              "name": "title",
+              "required": true,
+              "visibleOn": "this.sendChannel == 80 && (this.sendType == 80 || this.sendType == 110 || this.sendType == 120 )",
+              "size": "lg",
+              "clearValueOnHidden": false,
+              "placeholder": "可用占位符{$title}"
+            },
+            {
+              "type": "input-text",
+              "label": "钉钉发送内容",
+              "name": "content",
+              "required": true,
+              "visibleOn": "this.sendChannel == 80 && (this.sendType == 10 || this.sendType == 80|| this.sendType == 110 || this.sendType == 120)",
+              "size": "lg",
+              "clearValueOnHidden": false,
+              "placeholder": "可用占位符{$content}"
+            },
+            {
+              "type": "radios",
+              "label": "按钮布局",
+              "name": "btnOrientation",
+              "visibleOn": "this.sendChannel == 80 && (this.sendType == 120)",
+              "options": [
+                {
+                  "label": "按钮竖直排列",
+                  "value": "0"
+                },
+                {
+                  "label": "按钮横向排列",
+                  "value": "1"
+                }
+              ]
+            },
+            {
+              "type": "input-table",
+              "name": "btns",
+              "addable": true,
+              "editable": true,
+              "visibleOn": "this.sendChannel == 80 && ( this.sendType == 120)",
+              "columns": [
+                {
+                  "name": "title",
+                  "label": "标题",
+                  "placeholder": "可用占位符{$title}"
+                },
+                {
+                  "name": "actionURL",
+                  "label": "跳转链接",
+                  "placeholder": "可用占位符{$actionURL}"
+                }
+              ]
+            },
+            {
+              "type": "input-text",
+              "label": "钉钉发送链接",
+              "name": "url",
+              "required": true,
+              "visibleOn": "this.sendChannel == 80 && ( this.sendType == 110)",
+              "size": "lg",
+              "clearValueOnHidden": false,
+              "placeholder": "可用占位符{$url}"
+            },
+            {
+              "type": "input-text",
+              "label": "钉钉图片链接",
+              "name": "picUrl",
+              "visibleOn": "this.sendChannel == 80 && ( this.sendType == 110)",
+              "size": "lg",
+              "clearValueOnHidden": false,
+              "placeholder": "可用占位符{$picUrl}"
+            },
+            {
+              "type": "input-table",
+              "name": "feedCards",
+              "addable": true,
+              "editable": true,
+              "visibleOn": "this.sendChannel == 80 && ( this.sendType == 40)",
+              "columns": [
+                {
+                  "name": "title",
+                  "label": "标题",
+                  "placeholder": "可用占位符{$content}"
+                },
+                {
+                  "name": "messageURL",
+                  "label": "跳转链接",
+                  "placeholder": "可用占位符{$messageURL}"
+                },
+                {
+                  "name": "picURL",
+                  "label": "图片链接",
+                  "placeholder": "可用占位符{$picURL}"
+                }
+              ]
+            },
+            {
+              "type": "input-text",
+              "label": "消息标题",
+              "name": "title",
+              "required": true,
+              "visibleOn": "this.sendChannel == 90 && (this.sendType == 110 || this.sendType == 80 ||this.sendType == 120 )",
+              "size": "lg",
+              "clearValueOnHidden": false,
+              "placeholder": "可用占位符{$title}"
+            },
+            {
+              "type": "input-text",
+              "label": "消息内容",
+              "name": "content",
+              "required": true,
+              "visibleOn": "this.sendChannel == 90 && (this.sendType == 10 || this.sendType == 110 || this.sendType == 80 ||this.sendType == 120)",
+              "size": "lg",
+              "clearValueOnHidden": false,
+              "placeholder": "可用占位符{$content}"
+            },
+            {
+              "type": "input-text",
+              "label": "语音Id",
+              "name": "mediaId",
+              "required": true,
+              "visibleOn": "this.sendChannel == 90 && this.sendType == 20",
+              "size": "lg",
+              "placeholder": "可用占位符{$mediaId}",
+              "clearValueOnHidden": false
+            },
+            {
+              "type": "input-text",
+              "label": "语音时长",
+              "name": "duration",
+              "required": true,
+              "visibleOn": "this.sendChannel == 90 && this.sendType == 20",
+              "size": "lg",
+              "clearValueOnHidden": false,
+              "placeholder": "正整数，小于60，表示音频时长"
+            },
+            {
+              "type": "input-text",
+              "label": "文件Id",
+              "name": "mediaId",
+              "required": true,
+              "visibleOn": "this.sendChannel == 90 && this.sendType == 60",
+              "size": "lg",
+              "placeholder": "可用占位符{$mediaId}",
+              "clearValueOnHidden": false
+            },
+            {
+              "type": "radios",
+              "label": "按钮布局",
+              "name": "btnOrientation",
+              "visibleOn": "this.sendChannel == 90 && (this.sendType == 120)",
+              "options": [
+                {
+                  "label": "按钮竖直排列",
+                  "value": "0"
+                },
+                {
+                  "label": "按钮横向排列",
+                  "value": "1"
+                }
+              ]
+            },
+            {
+              "type": "input-table",
+              "name": "btns",
+              "addable": true,
+              "editable": true,
+              "visibleOn": "this.sendChannel == 90 && ( this.sendType == 120)",
+              "columns": [
+                {
+                  "name": "title",
+                  "label": "标题",
+                  "placeholder": "可用占位符{$title}"
+                },
+                {
+                  "name": "action_url",
+                  "label": "跳转链接",
+                  "placeholder": "可用占位符{$action_url}"
+                }
+              ]
+            },
+            {
+              "type": "input-text",
+              "label": "头部标题",
+              "name": "dingDingOaHeadTitle",
+              "required": true,
+              "visibleOn": "this.sendChannel == 90 && this.sendType == 130",
+              "size": "lg",
+              "clearValueOnHidden": false
+            },
+            {
+              "type": "input-text",
+              "label": "头部标题颜色",
+              "name": "dingDingOaHeadBgColor",
+              "required": true,
+              "visibleOn": "this.sendChannel == 90 && this.sendType == 130",
+              "size": "lg",
+              "clearValueOnHidden": false
+            },
+            {
+              "type": "input-text",
+              "label": "页面跳转链接",
+              "name": "url",
+              "required": true,
+              "visibleOn": "this.sendChannel == 90 && (this.sendType == 110 || this.sendType == 130)",
+              "size": "lg",
+              "clearValueOnHidden": false,
+              "placeholder": "可用占位符{$url}"
+            },
+            {
+              "type": "input-text",
+              "label": "正文标题",
+              "name": "dingDingOaTitle",
+              "visibleOn": "this.sendChannel == 90 && this.sendType == 130",
+              "size": "lg",
+              "clearValueOnHidden": false
+            },
+            {
+              "type": "input-text",
+              "label": "正文内容",
+              "name": "dingDingOaContent",
+              "visibleOn": "this.sendChannel == 90 && this.sendType == 130",
+              "size": "lg",
+              "clearValueOnHidden": false
+            },
+            {
+              "type": "input-text",
+              "label": "图片Id",
+              "name": "mediaId",
+              "visibleOn": "this.sendChannel == 90 && (this.sendType == 100 || this.sendType == 110|| this.sendType == 130)",
+              "size": "lg",
+              "placeholder": "可用占位符{$mediaId}",
+              "clearValueOnHidden": false
+            },
+            {
+              "type": "input-text",
+              "label": "作者名称",
+              "name": "dingDingOaAuthor",
+              "visibleOn": "this.sendChannel == 90 && this.sendType == 130",
+              "size": "lg",
+              "clearValueOnHidden": false
+            }
+          ],
+          "className": "",
+          "bodyClassName": "r-3x w-full text-lg r font-bold"
+        }
+      ],
+      "type": "form",
+      "mode": "horizontal",
+      "affixFooter": true,
+      "panelClassName": "Panel--default",
+      "bodyClassName": "text-lg",
+      "redirect": "/crud/list",
+      "api": {
+        "url": "http://localhost:8080/messageTemplate/save",
+        "method": "post",
+        "requestAdaptor": "\nlet jsonObj = {};\n\nlet content = JSON.parse(api.data.msgContent).content\nlet url = JSON.parse(api.data.msgContent).url\nlet title = JSON.parse(api.data.msgContent).title\nlet sendType = JSON.parse(api.data.msgContent).sendType\nlet picUrl = JSON.parse(api.data.msgContent).picUrl\n\n\n// push通知栏\nif(api.data.sendChannel == '20'){\n    jsonObj.content = content\n    jsonObj.url = url\n    jsonObj.title = title\n}\n// 短信\nif(api.data.sendChannel == '30'){\n    jsonObj.url = url\n    jsonObj.content = content\n}\n// 邮件\nif(api.data.sendChannel == '40'){\n    jsonObj.content = content\n    jsonObj.title = title\n}\n// 企业微信\nif (api.data.sendChannel == '70') {\n    // 文本类型\n    if (sendType == '10') {\n        jsonObj.content = content\n        jsonObj.sendType = sendType\n    }\n}\n// 钉钉机器人\nif (api.data.sendChannel == '80') {\n    // 文本类型(text)\n    if (sendType == '10') {\n        jsonObj.content = content\n        jsonObj.sendType = sendType\n    }\n    // 图文类型(FeedCard)\n    if (sendType == '40') {\n        jsonObj.sendType = sendType\n        jsonObj.feedCards = JSON.stringify(api.data.feedCards)\n    }\n    // markdown类型(markdown)\n    if (sendType == '80') {\n        jsonObj.content = content\n        jsonObj.sendType = sendType\n        jsonObj.title = title\n    }\n    // 链接类型(link)\n    if (sendType == '110') {\n        jsonObj.content = content\n        jsonObj.sendType = sendType\n        jsonObj.title = title\n        jsonObj.picUrl = picUrl\n        jsonObj.url = url\n    }\n    // 卡片跳转(actionCard)\n    if (sendType == '120') {\n        jsonObj.title = title\n        jsonObj.content = content\n        jsonObj.btnOrientation = api.data.btnOrientation\n        jsonObj.btns = JSON.stringify(api.data.btns)\n        jsonObj.sendType = sendType\n    }\n}\n// 钉钉工作消息\nif (api.data.sendChannel == '90') {\n    // 文本类型\n    if (sendType == '10') {\n        jsonObj.content = content\n        jsonObj.sendType = sendType\n    }\n    // 语音类型\n    if (sendType == '20') {\n        jsonObj.sendType = sendType\n        jsonObj.duration = api.data.duration\n        jsonObj.mediaId = api.data.mediaId\n    }\n    // 文件类型 || 图片类型\n    if (sendType == '60' || sendType == '100') {\n        jsonObj.sendType = sendType\n        jsonObj.mediaId = api.data.mediaId\n    }\n    // 链接类型\n    if (sendType == '110') {\n        jsonObj.content = content\n        jsonObj.sendType = sendType\n        jsonObj.title = title\n        jsonObj.mediaId = api.data.mediaId\n        jsonObj.url = url\n    }\n    // markdown类型(markdown)\n    if (sendType == '80') {\n        jsonObj.content = content\n        jsonObj.sendType = sendType\n        jsonObj.title = title\n    }\n    // 卡片跳转(actionCard)\n    if (sendType == '120') {\n        jsonObj.title = title\n        jsonObj.content = content\n        jsonObj.btnOrientation = api.data.btnOrientation\n        jsonObj.btns = JSON.stringify(api.data.btns)\n        jsonObj.sendType = sendType\n    }\n    \n    // OA(actionCard)\n    if (sendType == '130') {\n        \n        // 头部\n        var head = {}\n        head.bgcolor = api.data.dingDingOaHeadBgColor\n        head.text = api.data.dingDingOaHeadTitle\n        jsonObj.dingDingOaHead = head\n        \n        // body\n        var body = {}\n        body.title = api.data.dingDingOaTitle\n        body.content = api.data.dingDingOaContent\n        body.image = api.data.mediaId\n        body.author = api.data.dingDingOaAuthor\n        jsonObj.dingDingOaBody = body\n        \n        // 通用\n        jsonObj.sendType = sendType\n        jsonObj.url = url\n    }\n}\n\n// 飞书群机器人\nif (api.data.sendChannel == '110') {\n    // 文本类型\n    if (sendType == '10') {\n        jsonObj.content = content\n        jsonObj.sendType = sendType\n    }\n\n    // 通用\n    jsonObj.sendType = sendType\n    jsonObj.url = url\n}\n\napi.data.msgContent = JSON.stringify(jsonObj)\nreturn api;",
+        "data": {
+          "name": "${name}",
+          "idType": "${idType}",
+          "msgType": "${msgType}",
+          "templateType": "${templateType}",
+          "expectPushTime": "${expectPushTime}",
+          "proposer": "${proposer}",
+          "sendChannel": "${sendChannel}",
+          "sendAccount": "${sendAccount}",
+          "cronCrowdPath": "${cronCrowdPath}",
+          "shieldType": "${shieldType}",
+          "feedCards": "${feedCards}",
+          "btnOrientation": "${btnOrientation}",
+          "btns": "${btns}",
+          "mediaId": "${mediaId}",
+          "duration": "${duration}",
+          "dingDingOaHeadTitle": "${dingDingOaHeadTitle}",
+          "dingDingOaHeadBgColor": "${dingDingOaHeadBgColor}",
+          "dingDingOaTitle": "${dingDingOaTitle}",
+          "dingDingOaContent": "${dingDingOaContent}",
+          "dingDingOaAuthor": "${dingDingOaAuthor}",
+          "msgContent": "{\"content\":\"${content}\",\"url\":\"${url}\",\"title\":\"${title}\",\"sendType\":\"${sendType}\",\"picUrl\":\"${picUrl}\"}"
+        }
+      }
+    }
+  ],
+  "toolbar": [
+    {
+      "type": "button",
+      "actionType": "link",
+      "link": "/crud/list",
+      "label": "返回列表"
+    }
+  ],
+  "messages": {},
+  "style": {},
+  "bodyClassName": "p-lg p-t-lg p-r-lg p-b-lg p-l-lg m-none m-l-lg m-b-lg m-r-lg m-t-lg m-lg b-5x b-dark r-3x text-dark bg-white w-full font-bold text-lg"
+}

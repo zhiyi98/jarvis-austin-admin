@@ -1,0 +1,619 @@
+{
+  "type": "page",
+  "title": "列表管理",
+  "body": [
+    {
+      "type": "crud",
+      "api": "http://localhost:8080/messageTemplate/list",
+      "bodyClassName": "panel-default",
+      "name": "sample",
+      "filter": {
+        "title": "",
+        "mode": "inline",
+        "wrapWithPanel": false,
+        "submitText": "",
+        "className": "m-b-sm",
+        "body": [
+          {
+            "type": "input-text",
+            "name": "keywords",
+            "placeholder": "通过关键字搜索",
+            "addOn": {
+              "label": "搜索",
+              "type": "submit",
+              "className": "btn-success"
+            },
+            "clearable": true,
+            "size": "lg"
+          }
+        ]
+      },
+      "bulkActions": [
+        {
+          "label": "批量删除",
+          "type": "button",
+          "level": "danger",
+          "actionType": "ajax",
+          "api": "delete:http://localhost:8080/messageTemplate/delete/$ids",
+          "confirmText": "确定要批量删除?"
+        }
+      ],
+      "columns": [
+        {
+          "name": "id",
+          "label": "ID",
+          "width": 20,
+          "sortable": true
+        },
+        {
+          "name": "name",
+          "label": "模板消息名"
+        },
+        {
+          "name": "sendChannel",
+          "label": "发送渠道",
+          "type": "mapping",
+          "map": {
+            "10": "IM站内信",
+            "20": "PUSH通知栏",
+            "30": "短信",
+            "40": "邮箱",
+            "50": "服务号",
+            "60": "小程序",
+            "70": "企业微信应用消息",
+            "80": "钉钉群机器人",
+            "90": "钉钉工作消息",
+            "100": "企业微信机器人",
+            "110": "飞书机器人"
+          }
+        },
+        {
+          "name": "templateType",
+          "label": "模板类型",
+          "type": "mapping",
+          "map": {
+            "10": "定时任务发送",
+            "20": "实时调用接口"
+          }
+        },
+        {
+          "name": "msgType",
+          "label": "消息类型",
+          "type": "mapping",
+          "map": {
+            "10": "通知类",
+            "20": "营销类",
+            "30": "验证码"
+          }
+        },
+        {
+          "name": "creator",
+          "label": "创建者"
+        },
+        {
+          "name": "idType",
+          "label": "接收者ID类型",
+          "type": "mapping",
+          "map": {
+            "10": "用户ID",
+            "20": "设备号",
+            "30": "手机号",
+            "40": "openId",
+            "50": "邮箱地址",
+            "60": "企业微信userId",
+            "70": "钉钉userId",
+            "80": "推送通知栏cid",
+            "90": "飞书userId"
+          }
+        },
+        {
+          "type": "operation",
+          "label": "操作",
+          "width": "",
+          "buttons": [
+            {
+              "type": "button-group",
+              "buttons": [
+                {
+                  "type": "button",
+                  "label": "测试",
+                  "level": "primary",
+                  "initApi": "post:http://localhost:8080/messageTemplate/query/$id",
+                  "actionType": "dialog",
+                  "dialog": {
+                    "title": "测试一条消息",
+                    "body": {
+                      "type": "form",
+                      "api": {
+                        "url": "http://localhost:8080/messageTemplate/test",
+                        "method": "post",
+                        "requestAdaptor": "let jsonObj = {};\n\nlet content = JSON.parse(api.data.msgContent).content\nlet url = JSON.parse(api.data.msgContent).url\nlet title = JSON.parse(api.data.msgContent).title\nlet sendType = JSON.parse(api.data.msgContent).sendType\nlet picUrl = JSON.parse(api.data.msgContent).picUrl\n\n\n// 钉钉机器人\nif (api.data.sendChannel == '80') {\n    // 图文类型(FeedCard)\n    if (sendType == '40') {\n        jsonObj.feedCards = JSON.stringify(api.data.feedCards)\n        api.data.msgContent = JSON.stringify(jsonObj)\n    }\n}\n\n\n\nreturn api;",
+                        "data": {
+                          "id": "${id}",
+                          "name": "${name}",
+                          "receiver": "${receiver}",
+                          "msgType": "${msgType}",
+                          "templateType": "${templateType}",
+                          "expectPushTime": "${expectPushTime}",
+                          "proposer": "${proposer}",
+                          "sendChannel": "${sendChannel}",
+                          "sendAccount": "${sendAccount}",
+                          "cronCrowdPath": "${cronCrowdPath}",
+                          "shieldType": "${shieldType}",
+                          "feedCards": "${feedCards}",
+                          "btnOrientation": "${btnOrientation}",
+                          "btns": "${btns}",
+                          "mediaId": "${mediaId}",
+                          "duration": "${duration}",
+                          "dingDingOaHeadTitle": "${dingDingOaHeadTitle}",
+                          "dingDingOaHeadBgColor": "${dingDingOaHeadBgColor}",
+                          "dingDingOaTitle": "${dingDingOaTitle}",
+                          "dingDingOaContent": "${dingDingOaContent}",
+                          "dingDingOaAuthor": "${dingDingOaAuthor}",
+                          "msgContent": "{\"content\":\"${content}\",\"url\":\"${url}\",\"title\":\"${title}\",\"sendType\":\"${sendType}\",\"picUrl\":\"${picUrl}\"}"
+                        }
+                      },
+                      "body": [
+                        {
+                          "type": "input-text",
+                          "name": "receiver",
+                          "label": "接收者",
+                          "description": "<font color=\"#008252\">存在占位符{$var}请替换占位符文案测试下发！</font>"
+                        },
+                        {
+                          "type": "input-text",
+                          "label": "飞书内容",
+                          "name": "content",
+                          "required": true,
+                          "visibleOn": "this.sendChannel == 110",
+                          "clearValueOnHidden": false
+                        },
+                        {
+                          "type": "input-text",
+                          "label": "短信内容",
+                          "name": "content",
+                          "required": true,
+                          "visibleOn": "this.sendChannel == 30",
+                          "mode": "",
+                          "clearValueOnHidden": false
+                        },
+                        {
+                          "type": "input-text",
+                          "label": "短信链接",
+                          "name": "url",
+                          "visibleOn": "this.sendChannel == 30",
+                          "clearValueOnHidden": false
+                        },
+                        {
+                          "type": "input-text",
+                          "label": "邮件标题",
+                          "name": "title",
+                          "required": true,
+                          "visibleOn": "this.sendChannel == 40",
+                          "size": "lg",
+                          "clearValueOnHidden": true
+                        },
+                        {
+                          "type": "input-text",
+                          "label": "邮件内容",
+                          "name": "content",
+                          "required": true,
+                          "visibleOn": "this.sendChannel == 40",
+                          "size": "lg",
+                          "clearValueOnHidden": true
+                        },
+                        {
+                          "type": "input-text",
+                          "label": "推送标题",
+                          "name": "title",
+                          "required": true,
+                          "visibleOn": "this.sendChannel == 20",
+                          "size": "lg",
+                          "clearValueOnHidden": true
+                        },
+                        {
+                          "type": "input-text",
+                          "label": "推送内容",
+                          "name": "content",
+                          "required": true,
+                          "visibleOn": "this.sendChannel == 20",
+                          "size": "lg",
+                          "clearValueOnHidden": true
+                        },
+                        {
+                          "type": "input-text",
+                          "label": "推送链接",
+                          "name": "url",
+                          "required": true,
+                          "visibleOn": "this.sendChannel == 20",
+                          "size": "lg",
+                          "clearValueOnHidden": true
+                        },
+                        {
+                          "name": "sendChannel",
+                          "label": "发送渠道",
+                          "type": "radios",
+                          "options": [
+                            {
+                              "label": "IM站内信",
+                              "value": "10"
+                            },
+                            {
+                              "label": "PUSH通知栏",
+                              "value": "20"
+                            },
+                            {
+                              "label": "短信",
+                              "value": "30"
+                            },
+                            {
+                              "label": "邮箱",
+                              "value": "40"
+                            },
+                            {
+                              "label": "服务号",
+                              "value": "50"
+                            },
+                            {
+                              "label": "小程序",
+                              "value": "60"
+                            },
+                            {
+                              "label": "企业微信",
+                              "value": "70"
+                            },
+                            {
+                              "label": "钉钉群机器人",
+                              "value": "80"
+                            },
+                            {
+                              "label": "钉钉应用消息",
+                              "value": "90"
+                            }
+                          ],
+                          "visibleOn": "this.sendChannel == 999999 ",
+                          "required": true
+                        },
+                        {
+                          "name": "sendType",
+                          "label": "发送类型",
+                          "type": "radios",
+                          "options": [
+                            {
+                              "label": "文本",
+                              "value": "10"
+                            },
+                            {
+                              "label": "语音",
+                              "value": "20"
+                            },
+                            {
+                              "label": "视频",
+                              "value": "30"
+                            },
+                            {
+                              "label": "图文",
+                              "value": "40"
+                            },
+                            {
+                              "label": "文本卡片",
+                              "value": "50"
+                            },
+                            {
+                              "label": "文件",
+                              "value": "60"
+                            },
+                            {
+                              "label": "小程序通知",
+                              "value": "70"
+                            },
+                            {
+                              "label": "markdown类型",
+                              "value": "80"
+                            },
+                            {
+                              "label": "模板卡片",
+                              "value": "90"
+                            },
+                            {
+                              "label": "图片",
+                              "value": "100"
+                            }
+                          ],
+                          "visibleOn": "this.sendChannel == 999999 ",
+                          "clearValueOnHidden": false,
+                          "required": true,
+                          "size": "lg"
+                        },
+                        {
+                          "type": "input-text",
+                          "label": "企业微信内容",
+                          "name": "content",
+                          "required": true,
+                          "visibleOn": "this.sendChannel == 70",
+                          "size": "lg",
+                          "clearValueOnHidden": true
+                        },
+                        {
+                          "type": "input-text",
+                          "label": "钉钉标题",
+                          "name": "title",
+                          "required": true,
+                          "visibleOn": "this.sendChannel == 80 && (this.sendType == 80 || this.sendType == 110 || this.sendType == 120 )",
+                          "size": "lg",
+                          "clearValueOnHidden": false
+                        },
+                        {
+                          "type": "input-text",
+                          "label": "钉钉发送内容",
+                          "name": "content",
+                          "required": true,
+                          "visibleOn": "this.sendChannel == 80 && (this.sendType == 10 || this.sendType == 80|| this.sendType == 110 || this.sendType == 120)",
+                          "size": "lg",
+                          "clearValueOnHidden": false
+                        },
+                        {
+                          "type": "input-text",
+                          "label": "钉钉发送链接",
+                          "name": "url",
+                          "required": true,
+                          "visibleOn": "this.sendChannel == 80 && ( this.sendType == 110)",
+                          "size": "lg",
+                          "clearValueOnHidden": false
+                        },
+                        {
+                          "type": "input-text",
+                          "label": "钉钉图片链接",
+                          "name": "picUrl",
+                          "visibleOn": "this.sendChannel == 80 && ( this.sendType == 110)",
+                          "size": "lg",
+                          "clearValueOnHidden": false
+                        },
+                        {
+                          "type": "input-table",
+                          "name": "feedCards",
+                          "addable": true,
+                          "editable": true,
+                          "visibleOn": "this.sendChannel == 80 && ( this.sendType == 40)",
+                          "columns": [
+                            {
+                              "name": "title",
+                              "label": "标题"
+                            },
+                            {
+                              "name": "messageURL",
+                              "label": "跳转链接"
+                            },
+                            {
+                              "name": "picURL",
+                              "label": "图片链接"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "input-table",
+                          "name": "btns",
+                          "addable": true,
+                          "editable": true,
+                          "visibleOn": "this.sendChannel == 80 && ( this.sendType == 120)",
+                          "columns": [
+                            {
+                              "name": "title",
+                              "label": "标题",
+                              "placeholder": "可用占位符{$title}"
+                            },
+                            {
+                              "name": "actionURL",
+                              "label": "跳转链接",
+                              "placeholder": "可用占位符{$actionURL}"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "input-text",
+                          "label": "消息标题",
+                          "name": "title",
+                          "visibleOn": "this.sendChannel == 90 && (this.sendType == 110 || this.sendType == 80 ||this.sendType == 120 )",
+                          "size": "lg",
+                          "clearValueOnHidden": false
+                        },
+                        {
+                          "type": "input-text",
+                          "label": "消息内容",
+                          "name": "content",
+                          "visibleOn": "this.sendChannel == 90 && (this.sendType == 10 || this.sendType == 110 || this.sendType == 80 ||this.sendType == 120)",
+                          "size": "lg",
+                          "clearValueOnHidden": false
+                        },
+                        {
+                          "type": "input-text",
+                          "label": "语音Id",
+                          "name": "mediaId",
+                          "visibleOn": "this.sendChannel == 90 && this.sendType == 20",
+                          "size": "lg",
+                          "clearValueOnHidden": false
+                        },
+                        {
+                          "type": "input-text",
+                          "label": "语音时长",
+                          "name": "duration",
+                          "visibleOn": "this.sendChannel == 90 && this.sendType == 20",
+                          "size": "lg",
+                          "clearValueOnHidden": false
+                        },
+                        {
+                          "type": "input-text",
+                          "label": "文件Id",
+                          "name": "mediaId",
+                          "visibleOn": "this.sendChannel == 90 && this.sendType == 60",
+                          "size": "lg",
+                          "clearValueOnHidden": false
+                        },
+                        {
+                          "type": "input-table",
+                          "name": "btns",
+                          "addable": true,
+                          "editable": true,
+                          "visibleOn": "this.sendChannel == 90 && ( this.sendType == 120)",
+                          "columns": [
+                            {
+                              "name": "title",
+                              "label": "标题"
+                            },
+                            {
+                              "name": "action_url",
+                              "label": "跳转链接"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "input-text",
+                          "label": "头部标题",
+                          "name": "dingDingOaHeadTitle",
+
+                          "visibleOn": "this.sendChannel == 90 && this.sendType == 130",
+                          "size": "lg",
+                          "clearValueOnHidden": false
+                        },
+                        {
+                          "type": "input-text",
+                          "label": "头部标题颜色",
+                          "name": "dingDingOaHeadBgColor",
+
+                          "visibleOn": "this.sendChannel == 90 && this.sendType == 130",
+                          "size": "lg",
+                          "clearValueOnHidden": false
+                        },
+                        {
+                          "type": "input-text",
+                          "label": "页面跳转链接",
+                          "name": "url",
+
+                          "visibleOn": "this.sendChannel == 90 && (this.sendType == 110 || this.sendType == 130)",
+                          "size": "lg",
+                          "clearValueOnHidden": false,
+                          "placeholder": "可用占位符{$url}"
+                        },
+                        {
+                          "type": "input-text",
+                          "label": "正文标题",
+                          "name": "dingDingOaTitle",
+                          "visibleOn": "this.sendChannel == 90 && this.sendType == 130",
+                          "size": "lg",
+                          "clearValueOnHidden": false
+                        },
+                        {
+                          "type": "input-text",
+                          "label": "正文内容",
+                          "name": "dingDingOaContent",
+                          "visibleOn": "this.sendChannel == 90 && this.sendType == 130",
+                          "size": "lg",
+                          "clearValueOnHidden": false
+                        },
+                        {
+                          "type": "input-text",
+                          "label": "图片Id",
+                          "name": "mediaId",
+                          "visibleOn": "this.sendChannel == 90 && (this.sendType == 100 || this.sendType == 110|| this.sendType == 130)",
+                          "size": "lg",
+                          "placeholder": "可用占位符{$mediaId}",
+                          "clearValueOnHidden": false
+                        },
+                        {
+                          "type": "input-text",
+                          "label": "作者名称",
+                          "name": "dingDingOaAuthor",
+                          "visibleOn": "this.sendChannel == 90 && this.sendType == 130",
+                          "size": "lg",
+                          "clearValueOnHidden": false
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "type": "button",
+                  "label": "查看",
+                  "level": "primary",
+                  "actionType": "link",
+                  "link": "/crud/${id}"
+                },
+                {
+                  "type": "button",
+                  "label": "修改",
+                  "level": "info",
+                  "actionType": "link",
+                  "link": "/crud/${id}/edit"
+                },
+                {
+                  "type": "button",
+                  "label": "启动",
+                  "level": "success",
+                  "actionType": "ajax",
+                  "confirmText": "您确认要启动吗?",
+                  "api": "post:http://localhost:8080/messageTemplate/start/$id",
+                  "visibleOn": "this.templateType==10 && this.msgStatus!=30"
+                },
+                {
+                  "type": "button",
+                  "label": "停止",
+                  "level": "success",
+                  "actionType": "ajax",
+                  "confirmText": "您确认要暂停吗?",
+                  "api": "post:http://localhost:8080/messageTemplate/stop/$id",
+                  "visibleOn": "this.templateType==10 && this.msgStatus==30"
+                },
+                {
+                  "type": "button",
+                  "label": "复制",
+                  "level": "warning",
+                  "actionType": "ajax",
+                  "confirmText": "您确认要复制?",
+                  "api": "post:http://localhost:8080/messageTemplate/copy/$id"
+                },
+                {
+                  "type": "button",
+                  "label": "撤回",
+                  "level": "danger",
+                  "actionType": "ajax",
+                  "confirmText": "您确认要撤回?",
+                  "api": "post:http://localhost:8080/messageTemplate/recall/$id"
+                },
+                {
+                  "type": "button",
+                  "label": "删除",
+                  "level": "danger",
+                  "actionType": "ajax",
+                  "confirmText": "您确认要删除?",
+                  "api": "delete:http://localhost:8080/messageTemplate/delete/$id"
+                }
+              ]
+            }
+          ],
+          "placeholder": "-",
+          "fixed": "right"
+        }
+      ],
+      "affixHeader": true,
+      "columnsTogglable": "auto",
+      "placeholder": "暂无数据",
+      "tableClassName": "table-db table-striped",
+      "headerClassName": "crud-table-header",
+      "footerClassName": "crud-table-footer",
+      "toolbarClassName": "crud-table-toolbar",
+      "combineNum": 0
+    }
+  ],
+  "toolbar": [
+    {
+      "type": "button",
+      "actionType": "link",
+      "link": "/crud/new",
+      "label": "新增",
+      "icon": "fa fa-plus",
+      "primary": true
+    }
+  ],
+  "remark": null,
+  "name": "page-demo"
+}
